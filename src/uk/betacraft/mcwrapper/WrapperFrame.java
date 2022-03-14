@@ -1,4 +1,4 @@
-package pl.betacraft.mcwrapper;
+package uk.betacraft.mcwrapper;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
@@ -45,6 +45,8 @@ public class WrapperFrame extends JFrame {
 		}
 
 		this.make(maximize);
+
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void make(boolean maximize) {

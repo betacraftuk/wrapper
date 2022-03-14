@@ -1,4 +1,4 @@
-package pl.betacraft.mcwrapper;
+package uk.betacraft.mcwrapper;
 
 import java.awt.Image;
 import java.util.HashMap;
@@ -59,7 +59,7 @@ public class BCWrapper {
 			arguments.put("height", Integer.toString(y));
 		}
 
-		boolean maximize = arguments.get("maximize") != null;
+		boolean maximize = arguments.containsKey("maximize");
 
 		String frame_name = (String) arguments.get("frameName");
 		if (frame_name == null || frame_name.equals("")) frame_name = "Minecraft";

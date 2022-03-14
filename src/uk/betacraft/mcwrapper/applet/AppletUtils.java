@@ -1,10 +1,10 @@
-package pl.betacraft.mcwrapper.applet;
+package uk.betacraft.mcwrapper.applet;
 
 import java.applet.Applet;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
-import pl.betacraft.mcwrapper.BCWrapper;
+import uk.betacraft.mcwrapper.BCWrapper;
 
 public class AppletUtils {
 

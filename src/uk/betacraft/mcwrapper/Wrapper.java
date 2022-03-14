@@ -1,4 +1,4 @@
-package pl.betacraft.mcwrapper;
+package uk.betacraft.mcwrapper;
 
 import java.applet.Applet;
 import java.applet.AppletStub;
@@ -8,7 +8,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import pl.betacraft.mcwrapper.applet.AppletUtils;
+import legacyfix.LegacyURLStreamHandlerFactory;
+import uk.betacraft.mcwrapper.applet.AppletUtils;
 
 public class Wrapper extends Applet implements AppletStub {
 	private static final long serialVersionUID = 2031802022722032801L;
@@ -42,7 +43,7 @@ public class Wrapper extends Applet implements AppletStub {
 	public boolean setAppletParameter(String param, String value) {
 		String lastValue = this.getParameter(param);
 		if (lastValue != null)
-			System.out.println("Warning: The applet parameter \"" + param + "\" has been overwritten from \"" + lastValue + "\" to \"" + value + "\".");
+			System.out.println("Warning: The applet parameter \"" + param + "\" was overwrote from \"" + lastValue + "\" to \"" + value + "\".");
 		return this.setAppletParameter(param, value, true);
 	}
 
@@ -131,6 +132,7 @@ public class Wrapper extends Applet implements AppletStub {
 	}
 
 	public void start() {
+		URL.setURLStreamHandlerFactory(new LegacyURLStreamHandlerFactory());
 		this.game_applet.start();
 	}
 

@@ -1,4 +1,4 @@
-package pl.betacraft.mcwrapper;
+package uk.betacraft.mcwrapper;
 
 import java.awt.Image;
 import java.awt.event.WindowAdapter;
