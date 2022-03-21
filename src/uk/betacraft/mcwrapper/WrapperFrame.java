@@ -61,7 +61,9 @@ public class WrapperFrame extends JFrame {
 		if (maximize)
 		    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		this.setVisible(true);
+		if (!BCWrapper.arguments.containsKey("invisible")) {
+			this.setVisible(true);
+		}
 	}
 
 	public void replace(Applet applet) {
