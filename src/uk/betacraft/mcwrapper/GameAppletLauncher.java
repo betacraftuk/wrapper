@@ -9,8 +9,8 @@ public class GameAppletLauncher {
 
 	public static WrapperFrame wrapper_frame;
 
-	public GameAppletLauncher(HashMap<String, String> parameters, String main_class_path, String frame_name, int x, int y, boolean maximize, Image icon) {
-		wrapper_frame = new WrapperFrame(frame_name, icon, x, y, maximize, parameters, main_class_path);
+	public GameAppletLauncher(HashMap<String, String> parameters, String main_class_path, String frame_name, int x, int y, boolean maximize, boolean resizeable, Image icon) {
+		wrapper_frame = new WrapperFrame(frame_name, icon, x, y, maximize, resizeable, parameters, main_class_path);
 	}
 
 	public void launchGame() {

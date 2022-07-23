@@ -1,6 +1,8 @@
 package uk.betacraft.mcwrapper;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -43,7 +45,7 @@ public class BCWrapper {
 			applet_params.put(query, System.getProperty(query));
 
 			if (debug)
-			    System.out.println("SET " + query + "=" + System.getProperty(query));
+				System.out.println("SET " + query + "=" + System.getProperty(query));
 		}
 
 		System.out.println("Accepted username: " + arguments.get("username"));
@@ -68,14 +70,36 @@ public class BCWrapper {
 		if (version_name != null && !version_name.equals("")) frame_name = frame_name + " [" + version_name.replaceAll("IJ ", "") + "]";
 
 		Image icon = null;
-		try {
-			icon = ImageIO.read(BCWrapper.class.getClassLoader().getResourceAsStream("favicon.png"));
-		} catch (Throwable t) {
-			t.printStackTrace();
+		if (arguments.containsKey("favicon")) {
+			// icon stays null if "none" specified
+			String favicon = arguments.get("favicon");
+			if (!favicon.equalsIgnoreCase("none")) {
+				File fav = new File(favicon);
+
+				if (fav.exists() && fav.isFile()) {
+					try {
+						icon = ImageIO.read(new FileInputStream(fav));
+					} catch (Throwable t) {
+						t.printStackTrace();
+						System.err.println("Couldn't read favicon!");
+					}
+				} else {
+					System.err.println("Couldn't read favicon!");
+				}
+			}
+		} else {
+			try {
+				icon = ImageIO.read(BCWrapper.class.getClassLoader().getResourceAsStream("favicon.png"));
+			} catch (Throwable t) {
+				t.printStackTrace();
+				System.err.println("Couldn't read default favicon!");
+			}
 		}
 
 		String main_class = arguments.get("mainClass"); // can be null
-		GameAppletLauncher applet_launcher = new GameAppletLauncher(applet_params, main_class, frame_name, x, y, maximize, icon);
+		String resizeflag = arguments.get("resizeable"); // can be null
+		boolean resizeable = resizeflag != null ? !resizeflag.equals("false") : true;
+		GameAppletLauncher applet_launcher = new GameAppletLauncher(applet_params, main_class, frame_name, x, y, maximize, resizeable, icon);
 		applet_launcher.launchGame();
 	}
 }

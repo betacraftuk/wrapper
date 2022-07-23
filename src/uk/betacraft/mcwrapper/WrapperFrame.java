@@ -28,7 +28,7 @@ public class WrapperFrame extends JFrame {
 	public HashMap<String, String> parameters;
 	public static Wrapper wrapper;
 
-	public WrapperFrame(String name, Image icon, int x, int y, boolean maximize, HashMap<String, String> parameters, String main_class_path) {
+	public WrapperFrame(String name, Image icon, int x, int y, boolean maximize, boolean resizeable, HashMap<String, String> parameters, String main_class_path) {
 		this.window_name = name;
 		this.icon = icon;
 
@@ -44,26 +44,27 @@ public class WrapperFrame extends JFrame {
 			t.printStackTrace();
 		}
 
-		this.make(maximize);
+		this.make(maximize, resizeable);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	private void make(boolean maximize) {
+	private void make(boolean maximize, boolean resizeable) {
 		this.setTitle(this.window_name);
 
 		if (this.icon != null)
-		    this.setIconImage(this.icon);
+			this.setIconImage(this.icon);
 
 		this.getContentPane().setBackground(Color.BLACK);
 		this.getContentPane().setLayout(new BorderLayout());
 
 		if (maximize)
-		    this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
-		if (!BCWrapper.arguments.containsKey("invisible")) {
+		this.setResizable(resizeable);
+
+		if (!BCWrapper.arguments.containsKey("invisible"))
 			this.setVisible(true);
-		}
 	}
 
 	public void replace(Applet applet) {

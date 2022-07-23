@@ -132,7 +132,11 @@ public class Wrapper extends Applet implements AppletStub {
 	}
 
 	public void start() {
-		URL.setURLStreamHandlerFactory(new LegacyURLStreamHandlerFactory());
+		try {
+			URL.setURLStreamHandlerFactory(new LegacyURLStreamHandlerFactory());
+		} catch (Throwable err) {
+			// already defined. this will only throw in forge situation
+		}
 		this.game_applet.start();
 	}
 
@@ -182,4 +186,56 @@ public class Wrapper extends Applet implements AppletStub {
 	}
 
 	public void appletResize(int x, int y) {}
+
+	@Override
+	public java.awt.Dimension getMinimumSize() {
+		String widthstr = BCWrapper.arguments.get("minWidth");
+		String heightstr = BCWrapper.arguments.get("minHeight");
+
+		Integer width = null;
+		if (widthstr != null) {
+			width = Integer.parseInt(widthstr);
+		}
+
+		Integer height = null;
+		if (heightstr != null) {
+			height = Integer.parseInt(heightstr);
+		}
+
+		if (width != null && height != null) {
+			return new java.awt.Dimension(width, height);
+		} else if (width != null) {
+			return new java.awt.Dimension(width, (int)super.getMinimumSize().getHeight());
+		} else if (height != null) {
+			return new java.awt.Dimension((int)super.getMinimumSize().getWidth(), height);
+		} else {
+			return super.getMinimumSize();
+		}
+	}
+
+	@Override
+	public java.awt.Dimension getMaximumSize() {
+		String widthstr = BCWrapper.arguments.get("maxWidth");
+		String heightstr = BCWrapper.arguments.get("maxHeight");
+
+		Integer width = null;
+		if (widthstr != null) {
+			width = Integer.parseInt(widthstr);
+		}
+
+		Integer height = null;
+		if (heightstr != null) {
+			height = Integer.parseInt(heightstr);
+		}
+
+		if (width != null && height != null) {
+			return new java.awt.Dimension(width, height);
+		} else if (width != null) {
+			return new java.awt.Dimension(width, (int)super.getMaximumSize().getHeight());
+		} else if (height != null) {
+			return new java.awt.Dimension((int)super.getMaximumSize().getWidth(), height);
+		} else {
+			return super.getMaximumSize();
+		}
+	}
 }

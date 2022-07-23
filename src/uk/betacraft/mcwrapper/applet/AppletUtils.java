@@ -121,19 +121,19 @@ public class AppletUtils {
 				returns[i] = minecraft;
 
 				if (BCWrapper.debug)
-				    System.out.println("Index " + i + ": " + Boolean.toString(minecraft != null));
+					System.out.println("Index " + i + ": " + Boolean.toString(minecraft != null));
 
 			} else if (arg.equalsIgnoreCase("port")) {
 				returns[i] = Integer.parseInt(BCWrapper.arguments.get("port"));
 
 				if (BCWrapper.debug)
-				    System.out.println("Index " + i + ": " + BCWrapper.arguments.get("port"));
+					System.out.println("Index " + i + ": " + BCWrapper.arguments.get("port"));
 
 			} else {
 				returns[i] = BCWrapper.arguments.get(arg);
 
 				if (BCWrapper.debug)
-				    System.out.println("Index " + i + ": " + BCWrapper.arguments.get(arg));
+					System.out.println("Index " + i + ": " + BCWrapper.arguments.get(arg));
 			}
 		}
 		return returns;
