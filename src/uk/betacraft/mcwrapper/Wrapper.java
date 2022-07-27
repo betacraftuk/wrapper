@@ -32,12 +32,6 @@ public class Wrapper extends Applet implements AppletStub {
 		this.setPreferredSize(new Dimension(x, y));
 		this.setLayout(new BorderLayout());
 		this.add(this.game_applet, "Center");
-
-		Runtime.getRuntime().addShutdownHook(new Thread() {
-			public void run() {
-				Wrapper.this.stop();
-			}
-		});
 	}
 
 	public boolean setAppletParameter(String param, String value) {
@@ -73,6 +67,11 @@ public class Wrapper extends Applet implements AppletStub {
 	public void init() {
 		this.active = true;
 		this.game_applet.init();
+
+		// Allow for runs without LegacyFix
+		if (!"true".equals(System.getProperty("lf.present", "false"))) {
+			applyFixes();
+		}
 	}
 
 	public void applyFixes() {

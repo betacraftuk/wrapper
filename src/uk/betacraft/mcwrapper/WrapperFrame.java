@@ -45,8 +45,6 @@ public class WrapperFrame extends JFrame {
 		}
 
 		this.make(maximize, resizeable);
-
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	private void make(boolean maximize, boolean resizeable) {
@@ -77,7 +75,7 @@ public class WrapperFrame extends JFrame {
 
 		wrapper.init();
 		wrapper.start();
-		wrapper.validate();
+		this.validate();
 	}
 
 	private Wrapper makeWrapper(Applet ready) {

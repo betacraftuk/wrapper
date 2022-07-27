@@ -15,9 +15,12 @@ public class GameAppletLauncher {
 
 	public void launchGame() {
 		wrapper_frame.addWindowListener(new WindowAdapter() {
+			@Override
 			public void windowClosing(WindowEvent e) {
+				WrapperFrame.wrapper.destroy();
 				wrapper_frame.setVisible(false);
 				wrapper_frame.dispose();
+				
 			}
 		});
 		wrapper_frame.replace(null);
