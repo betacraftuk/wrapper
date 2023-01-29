@@ -3,12 +3,17 @@ package uk.betacraft.mcwrapper;
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.Image;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
-public class WrapperFrame extends JFrame {
+import net.minecraft.Launcher;
+
+public class WrapperFrame extends Frame {
 	private static final long serialVersionUID = 2031802022722032802L;
 
 	private String[] known_main_classes = new String[] {
@@ -26,7 +31,7 @@ public class WrapperFrame extends JFrame {
 
 	private ClassLoader class_loader;
 	public HashMap<String, String> parameters;
-	public static Wrapper wrapper;
+	public static Launcher wrapper;
 
 	public WrapperFrame(String name, Image icon, int x, int y, boolean maximize, boolean resizeable, HashMap<String, String> parameters, String main_class_path) {
 		this.window_name = name;
@@ -44,17 +49,21 @@ public class WrapperFrame extends JFrame {
 			t.printStackTrace();
 		}
 
-		this.make(maximize, resizeable);
-	}
-
-	private void make(boolean maximize, boolean resizeable) {
 		this.setTitle(this.window_name);
 
 		if (this.icon != null)
 			this.setIconImage(this.icon);
 
-		this.getContentPane().setBackground(Color.BLACK);
-		this.getContentPane().setLayout(new BorderLayout());
+		this.setBackground(Color.BLACK);
+		this.setLayout(new BorderLayout());
+		
+		JPanel var1 = new JPanel();
+		var1.setLayout(new BorderLayout());
+		var1.setBackground(Color.BLACK);
+		var1.setPreferredSize(new Dimension(x, y));
+		this.add(var1, "Center");
+		this.pack();
+		this.setLocationRelativeTo(null);
 
 		if (maximize)
 			this.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -66,19 +75,16 @@ public class WrapperFrame extends JFrame {
 	}
 
 	public void replace(Applet applet) {
-		this.getContentPane().removeAll();
 		wrapper = this.makeWrapper(applet);
-		this.getContentPane().add(wrapper, "Center");
-
-		this.pack();
-		this.setLocationRelativeTo(null);
+		this.removeAll();
+		this.add(wrapper, "Center");
 
 		wrapper.init();
-		wrapper.start();
 		this.validate();
+		wrapper.start();
 	}
 
-	private Wrapper makeWrapper(Applet ready) {
+	private Launcher makeWrapper(Applet ready) {
 		if (ready == null) {
 			Class<?> main_class = null;
 			Throwable[] errors = new Throwable[2];
@@ -109,7 +115,7 @@ public class WrapperFrame extends JFrame {
 			}
 		}
 		try {
-			Wrapper wrapper = new Wrapper(ready, this.width, this.height);
+			Launcher wrapper = new Launcher(ready, this.width, this.height);
 			wrapper.applet_parameters = this.parameters;
 			return wrapper;
 		} catch (Throwable t) {

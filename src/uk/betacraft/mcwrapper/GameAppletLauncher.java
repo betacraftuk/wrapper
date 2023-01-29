@@ -17,14 +17,29 @@ public class GameAppletLauncher {
 		wrapper_frame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				if (WrapperFrame.wrapper != null)
+				(new LoopThread()).start();
+				if (WrapperFrame.wrapper != null) {
+					WrapperFrame.wrapper.stop();
 					WrapperFrame.wrapper.destroy();
-
-				wrapper_frame.setVisible(false);
-				wrapper_frame.dispose();
+				}
+				
 				System.exit(0);
 			}
 		});
 		wrapper_frame.replace(null);
 	}
+	
+	class LoopThread extends Thread {
+
+		   public void run() {
+		      try {
+		         Thread.sleep(30000L);
+		      } catch (InterruptedException var2) {
+		         var2.printStackTrace();
+		      }
+
+		      System.out.println("FORCING EXIT!");
+		      System.exit(0);
+		   }
+		}
 }

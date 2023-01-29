@@ -1,17 +1,19 @@
-package uk.betacraft.mcwrapper;
+package net.minecraft;
 
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import legacyfix.LegacyURLStreamHandlerFactory;
+import uk.betacraft.mcwrapper.BCWrapper;
 import uk.betacraft.mcwrapper.applet.AppletUtils;
 
-public class Wrapper extends Applet implements AppletStub {
+public class Launcher extends Applet implements AppletStub {
 	private static final long serialVersionUID = 2031802022722032801L;
 
 	public Map<String, String> applet_parameters = new HashMap<String, String>();
@@ -22,14 +24,15 @@ public class Wrapper extends Applet implements AppletStub {
 	private boolean active = false;
 	private int context = 0;
 
-	public Wrapper(Applet game_applet, int x, int y) {
+	public Launcher(Applet game_applet, int x, int y) {
 		this.width = x;
 		this.height = y;
+
 		this.game_applet = game_applet;
 
 		this.game_applet.setStub(this);
+		this.game_applet.setSize(this.width, this.height);
 
-		this.setPreferredSize(new Dimension(x, y));
 		this.setLayout(new BorderLayout());
 		this.add(this.game_applet, "Center");
 	}
@@ -61,7 +64,17 @@ public class Wrapper extends Applet implements AppletStub {
 
 	// Forge... d-_-b
 	public void replace(Applet game_applet) {
-		GameAppletLauncher.wrapper_frame.replace(game_applet);
+		this.game_applet = game_applet;
+
+		this.game_applet.setStub(this);
+		this.game_applet.setSize(this.width, this.height);
+
+		this.setLayout(new BorderLayout());
+		this.add(this.game_applet, "Center");
+		
+		this.init();
+		this.start();
+		this.validate();
 	}
 
 	public void init() {
@@ -145,23 +158,11 @@ public class Wrapper extends Applet implements AppletStub {
 	}
 
 	public void destroy() {
-		this.active = false;
 		this.game_applet.destroy();
 	}
 
 	public boolean isActive() {
-		if (context == 0) {
-			context = -1;
-			try {
-				if (this.getAppletContext() != null) {
-					context = 1;
-				}
-			} catch (Throwable t) {}
-		}
-		if (context == -1) {
-			return active;
-		}
-		return super.isActive();
+		return active;
 	}
 
 	public URL getDocumentBase() {
@@ -183,8 +184,6 @@ public class Wrapper extends Applet implements AppletStub {
 			return null;
 		}
 	}
-
-	public void appletResize(int x, int y) {}
 
 	@Override
 	public java.awt.Dimension getMinimumSize() {
@@ -237,4 +236,6 @@ public class Wrapper extends Applet implements AppletStub {
 			return super.getMaximumSize();
 		}
 	}
+
+	public void appletResize(int width, int height) {}
 }
