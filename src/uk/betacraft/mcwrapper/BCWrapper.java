@@ -19,7 +19,7 @@ public class BCWrapper {
 		final Properties p = System.getProperties();
 
 		for (int i = 0; i < args.length; i++) {
-			String[] split = args[i].split("=");
+			String[] split = args[i].split("=", 2);
 			//System.out.println(args[i]);
 			arguments.put(split[0], split.length == 1 ? "" : split[1]);
 		}

@@ -3,8 +3,6 @@ package net.minecraft;
 import java.applet.Applet;
 import java.applet.AppletStub;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +20,6 @@ public class Launcher extends Applet implements AppletStub {
 	public int height;
 
 	private boolean active = false;
-	private int context = 0;
 
 	public Launcher(Applet game_applet, int x, int y) {
 		this.width = x;
